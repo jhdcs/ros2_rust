@@ -14,28 +14,20 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Corrosion)
 
 find_package(ament_cmake REQUIRED)
-find_package(ament_cmake_export_crates REQUIRED)
-
-# install(
-#   FILES Cargo.toml
-#   DESTINATION share/${PROJECT_NAME}/rust/
-# )
-
-install(
-  DIRECTORY src/
-  DESTINATION  share/${PROJECT_NAME}/rust/src
-)
-
-# ament_export_crates("share/${PROJECT_NAME}/rust")
 
 # This defines a crate with the same name as in the Cargo.toml
 # I.e: This defines "rclrs_common"
 corrosion_import_crate(MANIFEST_PATH Cargo.toml)
 
-# Debugging
-get_directory_property(CURR_TARGETS BUILDSYSTEM_TARGETS)
-message("Current Targets: ${CURR_TARGETS}")
+ament_export_targets(export_rclrs_common HAS_LIBRARY_TARGET)
 
-ament_export_targets(rclrs_common HAS_LIBRARY_TARGET)
+install(
+  TARGETS rclrs_common
+  EXPORT export_rclrs_common
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
 
 ament_package()
