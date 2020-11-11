@@ -10,4 +10,4 @@ downcast = "0.10"
 failure = "0.1.5"
 
 [lib]
-crate-type = ["staticlib"]
+crate-type = ["cdylib"]
